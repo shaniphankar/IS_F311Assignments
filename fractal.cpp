@@ -44,18 +44,18 @@ void drawFractal()
 	for(int i=0;i<11;i++)
 		cirRadArr[i]=50;
 	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(1.0);
 	for(int i=0;i<11;i++)
 	{
 		pntX1=cirPointsArr[i][0];
 		pntY1=cirPointsArr[i][1];
 		r=cirRadArr[i];
 		// cout<<pntX1<<" "<<pntY1<<" "<<r<<"\n";
-		glClear (GL_COLOR_BUFFER_BIT);
-		glColor3f (0.0, 0.0, 0.0);
-		glPointSize(1.0);
-		myDisplayCircle();
-		glutSwapBuffers ();
+		midPointCircleAlgo();
 	}
+	glutSwapBuffers ();
 }
 int main(int argc, char** argv)
 {

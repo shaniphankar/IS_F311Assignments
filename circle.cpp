@@ -1,10 +1,13 @@
-#include <stdio.h>
 #include <iostream>
 #include <GL/glut.h>
 #include "glRoutines.h"
+#include "circle.h"
 using namespace std;
 
+/*
+Global variables 
 int pntX1, pntY1, r;
+*/
 
 void midPointCircleAlgo()
 {
@@ -29,14 +32,14 @@ void midPointCircleAlgo()
 			y--;
 		}
 		x++;
-		plot(x, y);
-		plot(x, -y);
-		plot(-x, y);
-		plot(-x, -y);
-		plot(y, x);
-		plot(-y, x);
-		plot(y, -x);
-		plot(-y, -x);
+		plot(pntX1+(x), pntY1+(y));
+		plot(pntX1+(x), pntY1+(-y));
+		plot(pntX1+(-x), pntY1+(y));
+		plot(pntX1+(-x), pntY1+(-y));
+		plot(pntX1+(y), pntY1+(x));
+		plot(pntX1+(-y), pntY1+(x));
+		plot(pntX1+(y), pntY1+(-x));
+		plot(pntX1+(-y), pntY1+(-x));
 	}
 
 }

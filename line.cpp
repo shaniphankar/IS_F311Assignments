@@ -1,11 +1,13 @@
-#include <stdio.h>
 #include <iostream>
 #include <GL/glut.h>
 #include "glRoutines.h"
+#include "line.h"
 using namespace std;
 
+/*
+Global variables
 int x0, y0, x1, y1;
-
+*/
 void midPointLineAlgoL()
 {
 	int dx = x1 - x0;

@@ -5,7 +5,7 @@
 #include "glRoutines.h"
 using namespace std;
 
-int pntX1, pntY1, r;
+extern int pntX1, pntY1, r;
 
 void midPointCircleAlgo();
 

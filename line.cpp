@@ -8,6 +8,8 @@ using namespace std;
 Global variables
 int x0, y0, x1, y1;
 */
+int x0, y0, x1, y1;
+
 void midPointLineAlgoL()
 {
 	int dx = x1 - x0;
@@ -70,24 +72,4 @@ void myDisplayLine(void)
 	else
 		midPointLineAlgoL();
 	glutSwapBuffers ();
-}
-
-int main(int argc, char** argv)
-{	
-	cout << "Enter the coordinates x0 y0:" << endl;
-	cin>> x0;
-	cin>> y0;
-	cout << "Enter the coordinates x1 y1:" << endl;
-	cin>> x1;
-	cin>> y1;
-	
-	glutInit(&argc, argv);
-	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize (1280, 960);
-	glutInitWindowPosition (100, 150);
-	glutCreateWindow ("Line Drawing Alogrithms");
-	glutDisplayFunc(myDisplayLine);
-	myInit ();
-	glutMainLoop();
-	return 0;
 }

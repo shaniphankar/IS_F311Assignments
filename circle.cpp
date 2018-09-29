@@ -8,6 +8,7 @@ using namespace std;
 Global variables 
 int pntX1, pntY1, r;
 */
+int pntX1, pntY1, r;
 
 void midPointCircleAlgo()
 {
@@ -53,20 +54,3 @@ void myDisplayCircle(void)
 	glutSwapBuffers ();
 }
 
-int main(int argc, char** argv)
-{	
-	cout << "Enter the coordinates of the center: cx cy" << endl;
-	cin >> pntX1;
-	cin >> pntY1;
-	cout << "Enter radius : ";
-	cin >> r;
-	glutInit(&argc, argv);
-	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize (1280,960);
-	glutInitWindowPosition(100,150);
-	glutCreateWindow ("Circle Drawing Alogrithms");
-	glutDisplayFunc(myDisplayCircle);
-	myInit ();
-	glutMainLoop();
-	return 0;
-}

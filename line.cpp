@@ -1,28 +1,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <GL/glut.h>
+#include "glRoutines.h"
 using namespace std;
 
 int x0, y0, x1, y1;
-
-void plot(int x, int y)
-{
-	glBegin(GL_POINTS);
-	glVertex2i(x, y);
-	glEnd();
-}
-
-
-void myInit (void)
-{
-	glClearColor(1.0, 1.0, 1.0, 0.0);
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glPointSize(4.0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0.0, 640.0, 0.0, 480.0);
-}
-
 
 void midPointLineAlgoL()
 {
@@ -76,7 +58,7 @@ void midPointLineAlgoG()
 
 }
 
-void myDisplay(void)
+void myDisplayLine(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
@@ -85,7 +67,7 @@ void myDisplay(void)
 		midPointLineAlgoG();
 	else
 		midPointLineAlgoL();
-	glFlush ();
+	glutSwapBuffers ();
 }
 
 int main(int argc, char** argv)
@@ -96,13 +78,13 @@ int main(int argc, char** argv)
 	cout << "Enter the coordinates x1 y1:" << endl;
 	cin>> x1;
 	cin>> y1;
-
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize (640, 480);
+	glutInitWindowSize (1280, 960);
 	glutInitWindowPosition (100, 150);
 	glutCreateWindow ("Line Drawing Alogrithms");
-	glutDisplayFunc(myDisplay);
+	glutDisplayFunc(myDisplayLine);
 	myInit ();
 	glutMainLoop();
 	return 0;

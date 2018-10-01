@@ -39,20 +39,50 @@ void drawCircle()
 
 void drawFractal()
 {
-	glutCreateWindow ("Fractal");
 	int cirPointsArr[11][2]={{-250,0},{-200,0},{-150,0},{-100,0},{-50,0},{0,0},{50,0},{100,0},{150,0},{200,0},{250,0}};
 	int cirRadArr[11];
 	for(int i=0;i<11;i++)
 		cirRadArr[i]=50;
-	glutDisplayFunc(myDisplayCircle);
 	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(1.0);
 	for(int i=0;i<11;i++)
 	{
-		pntX1=cirPointsArr[i][0];
+		// pntX1=cirPointsArr[i][0];
+		// pntY1=cirPointsArr[i][1];
+		// r=cirRadArr[i];
+		// cout<<pntX1<<" "<<pntY1<<" "<<r<<"\n";
+		midPointCircleAlgo();
+		pntX1=cirPointsArr[i][0]+r;
 		pntY1=cirPointsArr[i][1];
-		r=cirRadArr[i];
-		glutMainLoop();	
+		r=cirRadArr[i]/2;
+		midPointCircleAlgo();
+		pntX1=cirPointsArr[i][0]-r;
+		pntY1=cirPointsArr[i][1];
+		r=cirRadArr[i]/2;
+		midPointCircleAlgo();
+		pntX1=cirPointsArr[i][0];
+		pntY1=cirPointsArr[i][1]+r;
+		r=cirRadArr[i]/2;
+		midPointCircleAlgo();
+		pntX1=cirPointsArr[i][0];
+		pntY1=cirPointsArr[i][1]-r;
+		r=cirRadArr[i]/2;
+		midPointCircleAlgo();	
 	}
+	glutSwapBuffers ();
+}
+
+
+void drawFractalSkeleton()
+{
+	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(1.0);
+	// Add code here
+	glutSwapBuffers ();
 }
 int main(int argc, char** argv)
 {
@@ -63,14 +93,15 @@ int main(int argc, char** argv)
 	int option;
 	cout<< "Enter which the question number of the assignment you want to choose\n";
 	cin>>option;
+	//Add functionality to test if option number is correct otherwise retake input
 	if(option==1)
 		drawLine();
 	else if(option==2)
 		drawCircle();
 	else if(option==3)
-		drawFractal();
-	//Add functionality to test if option number is correct otherwise retake input
-	
-	
-
+		{
+			glutCreateWindow ("Fractal");
+			glutDisplayFunc(drawFractal);	
+			glutMainLoop();	
+		}
 }

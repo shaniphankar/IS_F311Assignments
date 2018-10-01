@@ -42,7 +42,7 @@ void midPointCircleAlgo()
 		plot(pntX1+(y), pntY1+(-x));
 		plot(pntX1+(-y), pntY1+(-x));
 	}
-
+	cout<<"Plotting Circle"<<" "<<pntX1<<" "<<pntY1<<" "<<r<<"\n";
 }
 
 void myDisplayCircle(void)

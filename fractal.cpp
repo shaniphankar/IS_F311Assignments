@@ -1,21 +1,22 @@
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include <GL/glut.h>
 #include "glRoutines.h"
 #include "circle.h"
 #include "line.h"
 using namespace std;
 
-extern int pntX1, pntY1, r,x0, y0, x1, y1;
-
+extern int midX, midY, r,pntX0, pntY0, pntX1, pntY1;
+pair<int,int> origin(0,0);
 void drawLine()
 {
-	cout << "Enter the coordinates x0 y0:" << endl;
-	cin>> x0;
-	cin>> y0;
-	cout << "Enter the coordinates x1 y1:" << endl;
-	cin>> x1;
-	cin>> y1;
+	cout << "Enter the coordinates pntX0 pntY0:" << endl;
+	cin>> pntX0;
+	cin>> pntY0;
+	cout << "Enter the coordinates pntX1 pntY1:" << endl;
+	cin>> pntX1;
+	cin>> pntY1;
 	glutCreateWindow ("Line Drawing Alogrithms");
 	glutDisplayFunc(myDisplayLine);
 	myInit ();
@@ -26,8 +27,8 @@ void drawLine()
 void drawCircle()
 {
 	cout << "Enter the coordinates of the center: cx cy" << endl;
-	cin >> pntX1;
-	cin >> pntY1;
+	cin >> midX;
+	cin >> midY;
 	cout << "Enter radius : ";
 	cin >> r;
 	glutCreateWindow ("Circle Drawing Alogrithms");
@@ -46,49 +47,94 @@ void drawFractal()
 	myInit ();
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
-	glPointSize(1.0);
+	glPointSize(2.0);
 	for(int i=0;i<11;i++)
 	{
-		// pntX1=cirPointsArr[i][0];
-		// pntY1=cirPointsArr[i][1];
+		// midX=cirPointsArr[i][0];
+		// midY=cirPointsArr[i][1];
 		// r=cirRadArr[i];
-		// cout<<pntX1<<" "<<pntY1<<" "<<r<<"\n";
+		// cout<<midX<<" "<<midY<<" "<<r<<"\n";
 		midPointCircleAlgo();
-		pntX1=cirPointsArr[i][0]+r;
-		pntY1=cirPointsArr[i][1];
+		midX=cirPointsArr[i][0]+r;
+		midY=cirPointsArr[i][1];
 		r=cirRadArr[i]/2;
 		midPointCircleAlgo();
-		pntX1=cirPointsArr[i][0]-r;
-		pntY1=cirPointsArr[i][1];
+		midX=cirPointsArr[i][0]-r;
+		midY=cirPointsArr[i][1];
 		r=cirRadArr[i]/2;
 		midPointCircleAlgo();
-		pntX1=cirPointsArr[i][0];
-		pntY1=cirPointsArr[i][1]+r;
+		midX=cirPointsArr[i][0];
+		midY=cirPointsArr[i][1]+r;
 		r=cirRadArr[i]/2;
 		midPointCircleAlgo();
-		pntX1=cirPointsArr[i][0];
-		pntY1=cirPointsArr[i][1]-r;
+		midX=cirPointsArr[i][0];
+		midY=cirPointsArr[i][1]-r;
 		r=cirRadArr[i]/2;
 		midPointCircleAlgo();	
 	}
 	glutSwapBuffers ();
 }
 
-
 void drawFractalSkeleton()
 {
 	myInit ();
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
-	glPointSize(1.0);
+	glPointSize(2.0);
 	// Add code here
 	glutSwapBuffers ();
 }
+void drawSacredGeom1()
+{
+	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(4.0);
+	midX=0;
+	midY=0;
+	r=250;
+	midPointCircleAlgo();
+	glPointSize(2.0);
+	r=240;
+	midPointCircleAlgo();
+	vector<pair<int,int>> circleXY (12,origin);
+	int i=0,angle=0;
+	glutSwapBuffers ();
+}
+void drawSacredGeom2()
+{
+	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(2.0);
+	// Add code here
+
+	glutSwapBuffers ();
+}
+void drawSacredGeom3()
+{
+	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(2.0);
+	// Add code here
+	glutSwapBuffers ();
+}
+void drawSacredGeom4()
+{
+	myInit ();
+	glClear (GL_COLOR_BUFFER_BIT);
+	glColor3f (0.0, 0.0, 0.0);
+	glPointSize(2.0);
+	// Add code here
+	glutSwapBuffers ();
+}
+
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize (1280,960);
+	glutInitWindowSize (1000,1000);
 	glutInitWindowPosition(100,150);
 	int option;
 	cout<< "Enter which the question number of the assignment you want to choose\n";
@@ -104,4 +150,10 @@ int main(int argc, char** argv)
 			glutDisplayFunc(drawFractal);	
 			glutMainLoop();	
 		}
+	else 
+	{
+		glutCreateWindow ("Fractal");
+		glutDisplayFunc(drawSacredGeom1);	
+		glutMainLoop();	
+	}
 }

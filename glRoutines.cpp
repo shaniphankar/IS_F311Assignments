@@ -18,7 +18,7 @@ void myInit (void)
 	glPointSize(4.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-640.0, 640.0, -480.0, 480.0);
+	gluOrtho2D(-500.0, 500.0, -500.0, 500.0);
 	
 }
 

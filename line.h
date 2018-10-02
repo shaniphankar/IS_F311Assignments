@@ -5,7 +5,7 @@
 #include "glRoutines.h"
 using namespace std;
 
-extern int x0, y0, x1, y1;
+extern int pntX0, pntY0, pntX1, pntY1;
 
 void midPointLineAlgoL();
 

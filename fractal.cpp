@@ -76,6 +76,40 @@ void drawCircle2(int x,int y,int radius)
 	}
 }
 
+void drawKoch(int x1,int y1,int x2,int y2,int depth)
+{
+	if(depth<=0)
+	{
+		if((x2-x1)==0)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else if(((y2-y1)/(x2-x1))>=1 || ((y2-y1)/(x2-x1)) <=-1)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else
+			midPointLineAlgoL(x1,y1,x2,y2);
+	}
+	else
+	{
+		int xb,xc,xd,yb,yc,yd;
+		double angle=atan2((y2-y1),(x2-x1));
+		double dist=sqrt(pow((y2-y1),2)+pow((x2-x1),2))/3;
+		cout<<angle;
+		xb=x1+cos(angle)*dist;
+		yb=y1+sin(angle)*dist;
+		xc=xb+dist*cos(angle+1.0472);
+		yc=yb+dist*sin(angle+1.0472);
+		xd=2*dist*cos(angle)+x1;
+		yd=2*dist*sin(angle)+y1;
+		
+		
+		drawKoch(x1,y1,xb,yb,depth-1);
+		drawKoch(xb,yb,xc,yc,depth-1);
+		drawKoch(xc,yc,xd,yd,depth-1);
+		drawKoch(xd,yd,x2,y2,depth-1);
+	}
+
+	
+}
+
 void myDisplay(void)
 {
 	myInit ();
@@ -83,7 +117,11 @@ void myDisplay(void)
 	glColor3f (0.0, 0.0, 0.0);
 	glPointSize(2.0);
 	// drawCircle1(0,0,150);
-	drawCircle2(0,0,150);
+	// drawCircle2(0,0,150);
+	drawKoch(200,0,0,0,3);
+	drawKoch(0,0,0,200,3);
+	drawKoch(0,200,200,200,3);
+	drawKoch(200,200,200,0,3);
 	glutSwapBuffers ();
 }
 int main(int argc, char** argv)

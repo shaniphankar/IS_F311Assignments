@@ -129,7 +129,7 @@ void drawSacredGeom1()
 		// cout<<bigTriangles[0][i].first<<" "<<bigTriangles[0][i].second<<"\n";		
 		i+=1;
 		angle+=120;
-		}
+	}
 
 	angle=30;
 	i=0;
@@ -157,7 +157,7 @@ void drawSacredGeom1()
 				midPointLineAlgoL();
 		}
 	}
-
+	
 
 	glutSwapBuffers ();
 }

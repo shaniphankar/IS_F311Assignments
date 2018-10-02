@@ -75,6 +75,39 @@ void drawCircle2(int x,int y,int radius)
 		drawCircle2(x,y-radius,radius/2);
 	}
 }
+void drawTriangle(int x1,int y1,int x2,int y2,int x3,int y3)
+{
+	if((x2-x1)==0)
+		midPointLineAlgoG(x1,y1,x2,y2);
+	else if(((y2-y1)/(x2-x1))>=1 || ((y2-y1)/(x2-x1)) <=-1)
+		midPointLineAlgoG(x1,y1,x2,y2);
+	else
+		midPointLineAlgoL(x1,y1,x2,y2);
+	if((x3-x2)==0)
+		midPointLineAlgoG(x2,y2,x3,y3);
+	else if(((y3-y2)/(x3-x2))>=1 || ((y3-y2)/(x3-x2)) <=-1)
+		midPointLineAlgoG(x2,y2,x3,y3);
+	else
+		midPointLineAlgoL(x2,y2,x3,y3);
+	if((x1-x3)==0)
+		midPointLineAlgoG(x3,y3,x1,y1);
+	else if(((y1-y3)/(x1-x3))>=1 || ((y1-y3)/(x1-x3)) <=-1)
+		midPointLineAlgoG(x3,y3,x1,y1);
+	else
+		midPointLineAlgoL(x3,y3,x1,y1);		
+}
+
+void drawSierp(int x1,int y1,int x2,int y2,int x3,int y3,int depth)
+{
+	if(depth<=0)
+		return;
+	drawTriangle((x1+x2)/2,(y1+y2)/2,(x2+x3)/2,(y2+y3)/2,(x3+x1)/2,(y3+y1)/2);
+	drawSierp(x1,y1,(x1+x2)/2,(y1+y2)/2,(x3+x1)/2,(y3+y1)/2,depth-1);
+	drawSierp((x1+x2)/2,(y1+y2)/2,x2,y2,(x3+x2)/2,(y3+y2)/2,depth-1);
+	drawSierp((x1+x3)/2,(y1+y3)/2,(x2+x3)/2,(y2+y3)/2,x3,y3,depth-1);
+	
+	
+}
 
 void drawKoch(int x1,int y1,int x2,int y2,int depth)
 {
@@ -118,10 +151,25 @@ void myDisplay(void)
 	glPointSize(2.0);
 	// drawCircle1(0,0,150);
 	// drawCircle2(0,0,150);
-	drawKoch(200,0,0,0,3);
-	drawKoch(0,0,0,200,3);
-	drawKoch(0,200,200,200,3);
-	drawKoch(200,200,200,0,3);
+	// drawKoch(200,0,0,0,3);
+	// drawKoch(0,0,0,200,3);
+	// drawKoch(0,200,200,200,3);
+	// drawKoch(200,200,200,0,3);
+	int angle=0;
+	while(angle<360)
+	{
+		drawKoch(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),3);
+		drawKoch(200*cos(0.01745329*angle),200*sin(0.01745329*angle),0,0,3);
+		angle+=90;
+	}
+	// // drawTriangle(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472));
+	// // drawSierp(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472),4);
+	// while(angle<360)
+	// {
+	// 	drawSierp(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),200*cos(0.01745329*angle+1.0472),200*sin(0.01745329*angle+1.0472),5);
+	// 	angle+=60;
+	// }
+
 	glutSwapBuffers ();
 }
 int main(int argc, char** argv)

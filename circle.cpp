@@ -10,7 +10,7 @@ int midX, midY, r;
 */
 int midX, midY, r;
 
-void midPointCircleAlgo()
+void midPointCircleAlgo(int midX,int midY,int r)
 {
 	int x = 0;
 	int y = r;
@@ -50,7 +50,7 @@ void myDisplayCircle(void)
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
 	glPointSize(1.0);
-	midPointCircleAlgo();
+	midPointCircleAlgo(midX,midY,r);
 	glutSwapBuffers ();
 }
 

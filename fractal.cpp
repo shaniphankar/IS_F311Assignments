@@ -12,6 +12,7 @@ using namespace std;
 extern int midX, midY, r,pntX0, pntY0, pntX1, pntY1;
 pair<int,int> origin(0,0);
 vector<pair<int,int>> triangle (3,origin);
+vector<pair<int,int>> quad (4,origin);
 
 void drawLine()
 {
@@ -42,43 +43,6 @@ void drawCircle()
 	
 }
 
-void drawFractal()
-{
-	int cirPointsArr[11][2]={{-250,0},{-200,0},{-150,0},{-100,0},{-50,0},{0,0},{50,0},{100,0},{150,0},{200,0},{250,0}};
-	int cirRadArr[11];
-	for(int i=0;i<11;i++)
-		cirRadArr[i]=50;
-	myInit ();
-	glClear (GL_COLOR_BUFFER_BIT);
-	glColor3f (0.0, 0.0, 0.0);
-	glPointSize(2.0);
-	for(int i=0;i<11;i++)
-	{
-		// midX=cirPointsArr[i][0];
-		// midY=cirPointsArr[i][1];
-		// r=cirRadArr[i];
-		// cout<<midX<<" "<<midY<<" "<<r<<"\n";
-		midPointCircleAlgo();
-		midX=cirPointsArr[i][0]+r;
-		midY=cirPointsArr[i][1];
-		r=cirRadArr[i]/2;
-		midPointCircleAlgo();
-		midX=cirPointsArr[i][0]-r;
-		midY=cirPointsArr[i][1];
-		r=cirRadArr[i]/2;
-		midPointCircleAlgo();
-		midX=cirPointsArr[i][0];
-		midY=cirPointsArr[i][1]+r;
-		r=cirRadArr[i]/2;
-		midPointCircleAlgo();
-		midX=cirPointsArr[i][0];
-		midY=cirPointsArr[i][1]-r;
-		r=cirRadArr[i]/2;
-		midPointCircleAlgo();	
-	}
-	glutSwapBuffers ();
-}
-
 void drawFractalSkeleton()
 {
 	myInit ();
@@ -88,7 +52,7 @@ void drawFractalSkeleton()
 	// Add code here
 	glutSwapBuffers ();
 }
-void drawSacredGeom1()
+void testForArgs()
 {
 	myInit ();
 	glClear (GL_COLOR_BUFFER_BIT);
@@ -97,10 +61,10 @@ void drawSacredGeom1()
 	midX=0;
 	midY=0;
 	r=250;
-	midPointCircleAlgo();
+	midPointCircleAlgo(midX,midY,r);
 	glPointSize(2.0);
-	r=240;
-	midPointCircleAlgo();
+	midPointCircleAlgo(midX,midY,r-10);
+	r=250;
 	vector<pair<int,int>> circleXY (12,origin);
 	int i=0,angle=0;
 	while(angle<360)
@@ -115,8 +79,8 @@ void drawSacredGeom1()
 	{
 		midX=circleXY[i].first;
 		midY=circleXY[i].second;
-		r=r/4;
-		midPointCircleAlgo();
+		r=round(r/4);
+		midPointCircleAlgo(midX,midY,r);
 		r=tempR;
 	}
 	vector<vector<pair<int,int>>> bigTriangles (2,triangle);
@@ -151,26 +115,102 @@ void drawSacredGeom1()
 			pntX1=bigTriangles[i][(j+1)%3].first;
 			pntY1=bigTriangles[i][(j+1)%3].second;
 			cout<<pntX0<<" "<<pntY0<<" "<<pntX1<<" "<<pntY1<<"\n";
-			if( (pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
-				midPointLineAlgoG();
+			if((pntX1-pntX0)==0)
+				midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
+			else if( (pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
+				midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
 			else
-				midPointLineAlgoL();
+				midPointLineAlgoL(pntX0,pntY0,pntX1,pntY1);
 		}
 	}
-	
-
+	vector<vector<pair<int,int>>> rhombi(12,quad);
+	angle=0;
+	i=0;
+	while(angle<360)
+	{
+		rhombi[i][0].first=0;
+		rhombi[i][0].second=0;
+		rhombi[i][1].first=round(r/2*(cos(angle*pi/180.0)));
+		rhombi[i][1].second=round(r/2*(sin(angle*pi/180.0)));
+		rhombi[i][2].first=round(r*(cos((angle+30)*pi/180.0)));
+		rhombi[i][2].second=round(r*(sin((angle+30)*pi/180.0)));
+		rhombi[i][3].first=round(r/2*(cos((angle+60)*pi/180.0)));
+		rhombi[i][3].second=round(r/2*(sin((angle+60)*pi/180.0)));
+		angle+=30;
+		i+=1;
+	}
+	for(int i=0;i<12;i++)
+	{
+		for(int j=0;j<4;j++)
+		{
+			pntX0=rhombi[i][j%4].first;
+			pntY0=rhombi[i][j%4].second;
+			pntX1=rhombi[i][(j+1)%4].first;
+			pntY1=rhombi[i][(j+1)%4].second;
+			cout<<pntX0<<" "<<pntY0<<" "<<pntX1<<" "<<pntY1<<"\n";
+			if((pntX1-pntX0)==0)
+				midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
+			else if( (pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
+				midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
+			else
+				midPointLineAlgoL(pntX0,pntY0,pntX1,pntY1);
+		}
+	}
+	vector<pair<int,int>> perps(6,origin);
+	angle=0;
+	i=0;
+	while(angle<360)
+	{
+		perps[i].first=round((r/2)*(cos((angle+30)*pi/180.0)));
+		perps[i].second=round((r/2)*(sin((angle+30)*pi/180.0)));
+		angle+=60;
+		i+=1;
+	}
+	for(int i=0;i<6;i++)
+	{
+		pntX0=0;
+		pntY0=0;
+		pntX1=perps[i].first;
+		pntY1=perps[i].second;
+		if((pntX1-pntX0)==0)
+			midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
+		else if((pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
+				midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
+		else
+			midPointLineAlgoL(pntX0,pntY0,pntX1,pntY1);
+	}
 	glutSwapBuffers ();
 }
-void drawSacredGeom2()
-{
-	myInit ();
-	glClear (GL_COLOR_BUFFER_BIT);
-	glColor3f (0.0, 0.0, 0.0);
-	glPointSize(2.0);
-	// Add code here
-
-	glutSwapBuffers ();
-}
+// void drawSacredGeom2()
+// {
+// 	myInit ();
+// 	glClear (GL_COLOR_BUFFER_BIT);
+// 	glColor3f (0.0, 0.0, 0.0);
+// 	glPointSize(2.0);
+// 	// Add code here
+// 	midX=0;
+// 	midY=0;
+// 	r=400;
+// 	vector<pair<int,int>> circleXY (24,origin);
+// 	int i=0,angle=0;
+// 	while(angle<360)
+// 	{
+// 		circleXY[i].first=round((1.1*r/4)*cos(angle * pi/180.0));
+// 		circleXY[i].second=round((1.1*r/4)*sin(angle * pi/180.0));
+// 		i+=1;
+// 		angle+=15;
+// 	}
+// 	int tempR=r;
+// 	for(int i=0;i<24;i++)
+// 	{
+// 		midX=circleXY[i].first;
+// 		midY=circleXY[i].second;
+// 		r=round(r/4);
+// 		midPointCircleAlgo(pntX0,pntY0,pntX1,pntY1);
+// 		r=tempR;
+// 	}
+// 	glutSwapBuffers ();
+// }
 void drawSacredGeom3()
 {
 	myInit ();
@@ -205,15 +245,13 @@ int main(int argc, char** argv)
 	else if(option==2)
 		drawCircle();
 	else if(option==3)
-		{
-			glutCreateWindow ("Fractal");
-			glutDisplayFunc(drawFractal);	
-			glutMainLoop();	
-		}
-	else 
 	{
 		glutCreateWindow ("Fractal");
-		glutDisplayFunc(drawSacredGeom1);	
+		glutDisplayFunc(testForArgs);	
 		glutMainLoop();	
+	}
+	else
+	{
+
 	}
 }

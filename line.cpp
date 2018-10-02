@@ -10,7 +10,7 @@ int pntX0, pntY0, pntX1, pntY1;
 */
 int pntX0, pntY0, pntX1, pntY1;
 
-void midPointLineAlgoL()
+void midPointLineAlgoL(int pntX0,int pntY0,int pntX1,int pntY1)
 {
 	cout<<"Called L algo\n";
 	int incx,incy;
@@ -51,7 +51,7 @@ void midPointLineAlgoL()
 
 }
 
-void midPointLineAlgoG()
+void midPointLineAlgoG(int pntX0,int pntY0,int pntX1,int pntY1)
 {
 	int incx,incy;
 	cout<<"Called G algo\n";
@@ -96,10 +96,9 @@ void myDisplayLine(void)
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
 	glPointSize(1.0);
-
 	if((pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
-		midPointLineAlgoG();
+		midPointLineAlgoG(pntX0,pntY0,pntX1,pntY1);
 	else
-		midPointLineAlgoL();
+		midPointLineAlgoL(pntX0,pntY0,pntX1,pntY1);
 	glutSwapBuffers ();
 }

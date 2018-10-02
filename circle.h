@@ -7,7 +7,7 @@ using namespace std;
 
 extern int midX, midY, r;
 
-void midPointCircleAlgo();
+void midPointCircleAlgo(int,int,int);
 
 void myDisplayCircle(void);
 

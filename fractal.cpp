@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <GL/glut.h>
 #include "glRoutines.h"
 #include "circle.h"
 #include "line.h"
+#define pi 3.14159265
 using namespace std;
 
 extern int midX, midY, r,pntX0, pntY0, pntX1, pntY1;
 pair<int,int> origin(0,0);
+vector<pair<int,int>> triangle (3,origin);
+
 void drawLine()
 {
 	cout << "Enter the coordinates pntX0 pntY0:" << endl;
@@ -99,6 +103,49 @@ void drawSacredGeom1()
 	midPointCircleAlgo();
 	vector<pair<int,int>> circleXY (12,origin);
 	int i=0,angle=0;
+	while(angle<360)
+	{
+		circleXY[i].first=round((3*r/4)*cos(angle * pi/180.0));
+		circleXY[i].second=round((3*r/4)*sin(angle * pi/180.0));
+		i+=1;
+		angle+=30;
+	}
+	int tempR=r;
+	for(int i=0;i<12;i++)
+	{
+		midX=circleXY[i].first;
+		midY=circleXY[i].second;
+		r=r/4;
+		midPointCircleAlgo();
+		r=tempR;
+	}
+	vector<vector<pair<int,int>>> bigTriangles (2,triangle);
+	angle=90;
+	i=0;
+	while(angle<360)
+	{
+		bigTriangles[0][i].first=round((r)*cos(angle*pi/180.0));
+		bigTriangles[0][i].second=round((r)*sin(angle*pi/180.0));
+		i+=1;
+		angle+=120;
+	}
+	angle=30;
+	i=0;
+	while(angle<360)
+	{
+		bigTriangles[0][i].first=round((r)*cos(angle*pi/180.0));
+		bigTriangles[0][i].second=round((r)*sin(angle*pi/180.0));
+		i+=1;
+		angle+=120;
+	}
+	for(int i=0;i<2;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+		}
+	}
+
+
 	glutSwapBuffers ();
 }
 void drawSacredGeom2()

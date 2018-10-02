@@ -126,22 +126,35 @@ void drawSacredGeom1()
 	{
 		bigTriangles[0][i].first=round((r)*cos(angle*pi/180.0));
 		bigTriangles[0][i].second=round((r)*sin(angle*pi/180.0));
+		// cout<<bigTriangles[0][i].first<<" "<<bigTriangles[0][i].second<<"\n";		
 		i+=1;
 		angle+=120;
-	}
+		}
+
 	angle=30;
 	i=0;
 	while(angle<360)
 	{
-		bigTriangles[0][i].first=round((r)*cos(angle*pi/180.0));
-		bigTriangles[0][i].second=round((r)*sin(angle*pi/180.0));
+		bigTriangles[1][i].first=round((r)*cos(angle*pi/180.0));
+		bigTriangles[1][i].second=round((r)*sin(angle*pi/180.0));
+		// cout<<bigTriangles[1][i].first<<" "<<bigTriangles[1][i].second<<"\n";		
 		i+=1;
 		angle+=120;
+
 	}
 	for(int i=0;i<2;i++)
 	{
 		for(int j=0;j<3;j++)
 		{
+			pntX0=bigTriangles[i][j%3].first;
+			pntY0=bigTriangles[i][j%3].second;
+			pntX1=bigTriangles[i][(j+1)%3].first;
+			pntY1=bigTriangles[i][(j+1)%3].second;
+			cout<<pntX0<<" "<<pntY0<<" "<<pntX1<<" "<<pntY1<<"\n";
+			if( (pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
+				midPointLineAlgoG();
+			else
+				midPointLineAlgoL();
 		}
 	}
 

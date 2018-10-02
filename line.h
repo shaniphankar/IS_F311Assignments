@@ -9,7 +9,7 @@ extern int pntX0, pntY0, pntX1, pntY1;
 
 void midPointLineAlgoL();
 
-void midPointAlgoG();
+void midPointLineAlgoG();
 
 void myDisplayLine(void);
 

@@ -12,8 +12,23 @@ int pntX0, pntY0, pntX1, pntY1;
 
 void midPointLineAlgoL()
 {
+	cout<<"Called L algo\n";
+	int incx,incy;
 	int dx = pntX1 - pntX0;
 	int dy = pntY1 - pntY0;
+	if(dx<0)
+		dx=-dx;
+	if(dy<0)
+		dy=-dy;
+	if(pntX1>=pntX0)
+		incx=1;
+	else
+		incx=-1;
+	if(pntY1>=pntY0)
+		incy=1;
+	else
+		incy=-1;
+
 	int d = 2*dy - dx;
 	int incE = 2*dy;
 	int incNE = 2*(dy-dx);
@@ -21,15 +36,15 @@ void midPointLineAlgoL()
 	int y = pntY0;
 	plot(x, y);
 
-	while(x<pntX1){
-		if(d<=0){
+	for(int i=0;i<dx;i++){
+		if(d<0){
 			d += incE;
-			x++;
+			x+=incx;
 		}
 		else{
 			d += incNE;
-			x++;
-			y++;
+			x+=incx;
+			y+=incy;
 		}
 		plot(x, y);
 	}
@@ -38,24 +53,38 @@ void midPointLineAlgoL()
 
 void midPointLineAlgoG()
 {
+	int incx,incy;
+	cout<<"Called G algo\n";
 	int dx = pntX1 - pntX0;
 	int dy = pntY1 - pntY0;
-	int d = dy - 2*dx;
-	int incE = 2*dy;
-	int incNE = 2*(dy-dx);
+	if(dx<0)
+		dx=-dx;
+	if(dy<0)
+		dy=-dy;
+	if(pntX1>=pntX0)
+		incx=1;
+	else
+		incx=-1;
+	if(pntY1>=pntY0)
+		incy=1;
+	else
+		incy=-1;
+	int d = 2*dx-dy;
+	int incE = 2*dx;
+	int incNE = 2*(dx-dy);
 	int x = pntX0;
 	int y = pntY0;
 	plot(x, y);
 
-	while(y<pntY1){
-		if(d>0){
+	for(int i=0;i<dy;i++){
+		if(d<0){
 			d += incE;
-			y++;
+			y+=incy;;
 		}
 		else{
 			d += incNE;
-			x++;
-			y++;
+			x+=incx;
+			y+=incy;
 		}
 		plot(x, y);
 	}
@@ -67,7 +96,8 @@ void myDisplayLine(void)
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
 	glPointSize(1.0);
-	if( (pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
+
+	if((pntY1-pntY0)/(pntX1-pntX0) >= 1 || (pntY1-pntY0)/(pntX1-pntX0) <= -1)
 		midPointLineAlgoG();
 	else
 		midPointLineAlgoL();

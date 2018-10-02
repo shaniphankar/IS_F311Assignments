@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <GL/glut.h>
 #include "glRoutines.h"
 #include "circle.h"
 #include "line.h"
+#define pi 3.14159265
 using namespace std;
 
 extern int midX, midY, r,pntX0, pntY0, pntX1, pntY1;
@@ -99,6 +101,13 @@ void drawSacredGeom1()
 	midPointCircleAlgo();
 	vector<pair<int,int>> circleXY (12,origin);
 	int i=0,angle=0;
+	while(angle<360)
+	{
+		circleXY[i].first=round(cos(angle * pi/180.0));
+		circleXY[i].first=round(sin(angle * pi/180.0));
+		i+=1;
+		angle+=30;
+	}
 	glutSwapBuffers ();
 }
 void drawSacredGeom2()

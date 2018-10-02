@@ -6,9 +6,9 @@ using namespace std;
 
 /*
 Global variables 
-int pntX1, pntY1, r;
+int midX, midY, r;
 */
-int pntX1, pntY1, r;
+int midX, midY, r;
 
 void midPointCircleAlgo()
 {
@@ -33,16 +33,16 @@ void midPointCircleAlgo()
 			y--;
 		}
 		x++;
-		plot(pntX1+(x), pntY1+(y));
-		plot(pntX1+(x), pntY1+(-y));
-		plot(pntX1+(-x), pntY1+(y));
-		plot(pntX1+(-x), pntY1+(-y));
-		plot(pntX1+(y), pntY1+(x));
-		plot(pntX1+(-y), pntY1+(x));
-		plot(pntX1+(y), pntY1+(-x));
-		plot(pntX1+(-y), pntY1+(-x));
+		plot(midX+(x), midY+(y));
+		plot(midX+(x), midY+(-y));
+		plot(midX+(-x), midY+(y));
+		plot(midX+(-x), midY+(-y));
+		plot(midX+(y), midY+(x));
+		plot(midX+(-y), midY+(x));
+		plot(midX+(y), midY+(-x));
+		plot(midX+(-y), midY+(-x));
 	}
-	cout<<"Plotting Circle"<<" "<<pntX1<<" "<<pntY1<<" "<<r<<"\n";
+	cout<<"Plotting Circle"<<" "<<midX<<" "<<midY<<" "<<r<<"\n";
 }
 
 void myDisplayCircle(void)

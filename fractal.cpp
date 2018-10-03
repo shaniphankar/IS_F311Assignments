@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <unordered_map>
 #include <GL/glut.h>
 #include "glRoutines.h"
 #include "circle.h"
@@ -109,6 +110,170 @@ void drawSierp(int x1,int y1,int x2,int y2,int x3,int y3,int depth)
 	
 }
 
+void drawGosper1(int x,int y,int len, string current, int depth)
+{
+	unordered_map<char,string> rules;
+	rules['F']="FF+F-F+F+FF";
+	if(depth<=0)
+	{	
+		int xNew,yNew;
+		int angle=0;
+		for(int i=0;i<current.length();i++)
+		{
+			if(current[i]=='F')
+			{
+				xNew=x+round(len*cos(0.01745329*angle));
+				yNew=y+round(len*sin(0.01745329*angle));
+				if((xNew-x)==0)
+				midPointLineAlgoG(x,y,xNew,yNew);
+				else if(((yNew-y)/(xNew-x))>=1 || ((yNew-y)/(xNew-x)) <=-1)
+					midPointLineAlgoG(x,y,xNew,yNew);
+				else
+					midPointLineAlgoL(x,y,xNew,yNew);
+				x=xNew;
+				y=yNew;
+			}
+			else if(current[i]=='+')
+			{
+				angle+=90;
+			}
+			else if(current[i]=='-')
+			{
+				angle-=90;
+			}
+		}
+		return;
+	}
+	string next;
+	next.empty();
+	for(int i=0;i<current.length();i++)
+	{
+		if(current[i]=='F')
+		{
+			next.append(rules['F']);
+		}
+		else if(current[i]=='+')
+		{
+			next.append("+");
+		}
+		else if(current[i]=='-')
+		{
+			next.append("-");
+		}
+	}
+	cout<<next<<endl;
+	drawGosper1(x,y,len,next,depth-1);
+}
+
+void drawGosper2(int x,int y,int len, string current, int depth)
+{
+	unordered_map<char,string> rules;
+	rules['F']="FF+F++F+F";
+	if(depth<=0)
+	{	
+		int xNew,yNew;
+		int angle=0;
+		for(int i=0;i<current.length();i++)
+		{
+			if(current[i]=='F')
+			{
+				xNew=x+round(len*cos(0.01745329*angle));
+				yNew=y+round(len*sin(0.01745329*angle));
+				if((xNew-x)==0)
+				midPointLineAlgoG(x,y,xNew,yNew);
+				else if(((yNew-y)/(xNew-x))>=1 || ((yNew-y)/(xNew-x)) <=-1)
+					midPointLineAlgoG(x,y,xNew,yNew);
+				else
+					midPointLineAlgoL(x,y,xNew,yNew);
+				x=xNew;
+				y=yNew;
+			}
+			else if(current[i]=='+')
+			{
+				angle+=90;
+			}
+			else if(current[i]=='-')
+			{
+				angle-=90;
+			}
+		}
+		return;
+	}
+	string next;
+	next.empty();
+	for(int i=0;i<current.length();i++)
+	{
+		if(current[i]=='F')
+		{
+			next.append(rules['F']);
+		}
+		else if(current[i]=='+')
+		{
+			next.append("+");
+		}
+		else if(current[i]=='-')
+		{
+			next.append("-");
+		}
+	}
+	cout<<next<<endl;
+	drawGosper2(x,y,len,next,depth-1);
+}
+
+void drawGosper3(int x,int y,int len, string current, int depth)
+{
+	unordered_map<char,string> rules;
+	rules['F']="F-F+F+F-F";
+	if(depth<=0)
+	{	
+		int xNew,yNew;
+		int angle=0;
+		for(int i=0;i<current.length();i++)
+		{
+			if(current[i]=='F')
+			{
+				xNew=x+round(len*cos(0.01745329*angle));
+				yNew=y+round(len*sin(0.01745329*angle));
+				if((xNew-x)==0)
+				midPointLineAlgoG(x,y,xNew,yNew);
+				else if(((yNew-y)/(xNew-x))>=1 || ((yNew-y)/(xNew-x)) <=-1)
+					midPointLineAlgoG(x,y,xNew,yNew);
+				else
+					midPointLineAlgoL(x,y,xNew,yNew);
+				x=xNew;
+				y=yNew;
+			}
+			else if(current[i]=='+')
+			{
+				angle+=90;
+			}
+			else if(current[i]=='-')
+			{
+				angle-=90;
+			}
+		}
+		return;
+	}
+	string next;
+	next.empty();
+	for(int i=0;i<current.length();i++)
+	{
+		if(current[i]=='F')
+		{
+			next.append(rules['F']);
+		}
+		else if(current[i]=='+')
+		{
+			next.append("+");
+		}
+		else if(current[i]=='-')
+		{
+			next.append("-");
+		}
+	}
+	cout<<next<<endl;
+	drawGosper3(x,y,len,next,depth-1);
+}
 void drawKoch(int x1,int y1,int x2,int y2,int depth)
 {
 	if(depth<=0)
@@ -155,13 +320,13 @@ void myDisplay(void)
 	// drawKoch(0,0,0,200,3);
 	// drawKoch(0,200,200,200,3);
 	// drawKoch(200,200,200,0,3);
-	int angle=0;
-	while(angle<360)
-	{
-		drawKoch(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),3);
-		drawKoch(200*cos(0.01745329*angle),200*sin(0.01745329*angle),0,0,3);
-		angle+=90;
-	}
+	// int angle=0;
+	// while(angle<360)
+	// {
+	// 	drawKoch(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),3);
+	// 	drawKoch(200*cos(0.01745329*angle),200*sin(0.01745329*angle),0,0,3);
+	// 	angle+=90;
+	// }
 	// // drawTriangle(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472));
 	// // drawSierp(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472),4);
 	// while(angle<360)
@@ -169,7 +334,10 @@ void myDisplay(void)
 	// 	drawSierp(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),200*cos(0.01745329*angle+1.0472),200*sin(0.01745329*angle+1.0472),5);
 	// 	angle+=60;
 	// }
-
+	// drawGosper1(0,0,20,"F+F+F+F",3);
+	// drawGosper2(-400,-400,20,"F+F+F+F",4);
+	drawGosper3(0,0,4,"F",4);
+	drawGosper3(0,0,-4,"F",4);
 	glutSwapBuffers ();
 }
 int main(int argc, char** argv)

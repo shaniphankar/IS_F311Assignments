@@ -4,14 +4,11 @@
 #include "circle.h"
 using namespace std;
 
-/*
-Global variables 
-int midX, midY, r;
-*/
 int midX, midY, r;
 
 void midPointCircleAlgo(int midX,int midY,int r)
 {
+
 	int x = 0;
 	int y = r;
 	int d= 1-r;

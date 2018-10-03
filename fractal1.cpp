@@ -4,10 +4,10 @@
 #include <cmath>
 #include <unordered_map>
 #include <GL/glut.h>
-#include "glRoutines.h"
+#include "glRoutines.h" 
 #include "circle.h"
 #include "line.h"
-#define pi 3.14159265
+#define pi 3.14159265 //
 using namespace std;
 
 extern int midX, midY, r,pntX0, pntY0, pntX1, pntY1;
@@ -112,6 +112,7 @@ void drawSierp(int x1,int y1,int x2,int y2,int x3,int y3,int depth)
 
 void drawKoch(int x1,int y1,int x2,int y2,int depth)
 {
+	
 	if(depth<=0)
 	{
 		if((x2-x1)==0)
@@ -441,8 +442,8 @@ void myDisplay(void)
 	// 	drawKochCircular(400*cos(0.01745329*angle),400*sin(0.01745329*angle),0,0,4);
 	// 	angle+=60;
 	// }
-	drawTriangle(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472));
-	drawSierp(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472),4);
+	// drawTriangle(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472));
+	// drawSierp(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472),4);
 	// while(angle<360)
 	// {
 	// 	drawSierp(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),200*cos(0.01745329*angle+1.0472),200*sin(0.01745329*angle+1.0472),5);
@@ -452,7 +453,7 @@ void myDisplay(void)
 	// drawGosper2(-400,-400,20,"F+F+F+F",4);
 	// drawGosper3(0,0,4,"F",4);
 	// drawGosper3(0,0,-4,"F",4);
-	// drawGosper4(-300,-400,30,"F++F++F++F++F",3);
+	drawGosper4(-300,-400,30,"F++F++F++F++F",3);
 	glutSwapBuffers ();
 }
 int main(int argc, char** argv)

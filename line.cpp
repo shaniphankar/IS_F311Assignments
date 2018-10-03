@@ -4,12 +4,8 @@
 #include "line.h"
 using namespace std;
 
-/*
-Global variables
-int pntX0, pntY0, pntX1, pntY1;
-*/
-int pntX0, pntY0, pntX1, pntY1;
 
+int pntX0, pntY0, pntX1, pntY1;
 void midPointLineAlgoL(int pntX0,int pntY0,int pntX1,int pntY1)
 {
 	cout<<"Called L algo\n";

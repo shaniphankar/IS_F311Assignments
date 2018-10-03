@@ -110,6 +110,77 @@ void drawSierp(int x1,int y1,int x2,int y2,int x3,int y3,int depth)
 	
 }
 
+void drawKoch(int x1,int y1,int x2,int y2,int depth)
+{
+	if(depth<=0)
+	{
+		if((x2-x1)==0)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else if(((y2-y1)/(x2-x1))>=1 || ((y2-y1)/(x2-x1)) <=-1)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else
+			midPointLineAlgoL(x1,y1,x2,y2);
+	}
+	else
+	{
+		int xb,xc,xd,yb,yc,yd;
+		double angle=atan2((y2-y1),(x2-x1));
+		double dist=sqrt(pow((y2-y1),2)+pow((x2-x1),2))/3;
+		cout<<angle;
+		xb=x1+cos(angle)*dist;
+		yb=y1+sin(angle)*dist;
+		xc=xb+dist*cos(angle+1.0472);
+		yc=yb+dist*sin(angle+1.0472);
+		xd=2*dist*cos(angle)+x1;
+		yd=2*dist*sin(angle)+y1;
+		
+		
+		drawKoch(x1,y1,xb,yb,depth-1);
+		drawKoch(xb,yb,xc,yc,depth-1);
+		drawKoch(xc,yc,xd,yd,depth-1);
+		drawKoch(xd,yd,x2,y2,depth-1);
+
+	}
+
+	
+}
+
+void drawKochCircular(int x1,int y1,int x2,int y2,int depth)
+{
+	if(depth<=0)
+	{
+		if((x2-x1)==0)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else if(((y2-y1)/(x2-x1))>=1 || ((y2-y1)/(x2-x1)) <=-1)
+			midPointLineAlgoG(x1,y1,x2,y2);
+		else
+			midPointLineAlgoL(x1,y1,x2,y2);
+	}
+	else
+	{
+		int xb,xc,xd,yb,yc,yd;
+		double angle=atan2((y2-y1),(x2-x1));
+		double dist=sqrt(pow((y2-y1),2)+pow((x2-x1),2))/3;
+		cout<<angle;
+		xb=x1+cos(angle)*dist;
+		yb=y1+sin(angle)*dist;
+		xc=xb+dist*cos(angle+1.0472);
+		yc=yb+dist*sin(angle+1.0472);
+		xd=2*dist*cos(angle)+x1;
+		yd=2*dist*sin(angle)+y1;
+		
+		
+		drawKoch(x1,y1,xb,yb,depth-1);
+		drawKoch(xb,yb,xc,yc,depth-1);
+		midPointCircleAlgo(xc,yc,dist/4);
+		drawKoch(xc,yc,xd,yd,depth-1);
+		drawKoch(xd,yd,x2,y2,depth-1);
+
+	}
+
+	
+}
+
 void drawGosper1(int x,int y,int len, string current, int depth)
 {
 	unordered_map<char,string> rules;
@@ -274,38 +345,74 @@ void drawGosper3(int x,int y,int len, string current, int depth)
 	cout<<next<<endl;
 	drawGosper3(x,y,len,next,depth-1);
 }
-void drawKoch(int x1,int y1,int x2,int y2,int depth)
-{
-	if(depth<=0)
-	{
-		if((x2-x1)==0)
-			midPointLineAlgoG(x1,y1,x2,y2);
-		else if(((y2-y1)/(x2-x1))>=1 || ((y2-y1)/(x2-x1)) <=-1)
-			midPointLineAlgoG(x1,y1,x2,y2);
-		else
-			midPointLineAlgoL(x1,y1,x2,y2);
-	}
-	else
-	{
-		int xb,xc,xd,yb,yc,yd;
-		double angle=atan2((y2-y1),(x2-x1));
-		double dist=sqrt(pow((y2-y1),2)+pow((x2-x1),2))/3;
-		cout<<angle;
-		xb=x1+cos(angle)*dist;
-		yb=y1+sin(angle)*dist;
-		xc=xb+dist*cos(angle+1.0472);
-		yc=yb+dist*sin(angle+1.0472);
-		xd=2*dist*cos(angle)+x1;
-		yd=2*dist*sin(angle)+y1;
-		
-		
-		drawKoch(x1,y1,xb,yb,depth-1);
-		drawKoch(xb,yb,xc,yc,depth-1);
-		drawKoch(xc,yc,xd,yd,depth-1);
-		drawKoch(xd,yd,x2,y2,depth-1);
-	}
 
+void drawGosper4(int x,int y,int len, string current, int depth)
+{
+	unordered_map<char,string> rules;
+	rules['F']="F++F++F|F-F++F";
+	if(depth<=0)
+	{	
+		int xNew,yNew;
+		int angle=0;
+		for(int i=0;i<current.length();i++)
+		{
+			if(current[i]=='F')
+			{
+				xNew=x+round(len*cos(0.01745329*angle));
+				yNew=y+round(len*sin(0.01745329*angle));
+				if((xNew-x)==0)
+				midPointLineAlgoG(x,y,xNew,yNew);
+				else if(((yNew-y)/(xNew-x))>=1 || ((yNew-y)/(xNew-x)) <=-1)
+					midPointLineAlgoG(x,y,xNew,yNew);
+				else
+					midPointLineAlgoL(x,y,xNew,yNew);
+				drawKoch(x,y,xNew,yNew,1);
+				x=xNew;
+				y=yNew;
+				
+			}
+			else if(current[i]=='+')
+			{
+				angle+=36;
+			}
+			else if(current[i]=='-')
+			{
+				angle-=36;
+			}
+			else if(current[i]=='|')
+			{
+				angle+=180;
+			}
+		}
+
+		return;
+	}
+	string next;
+	next.empty();
+	for(int i=0;i<current.length();i++)
+	{
+		if(current[i]=='F')
+		{
+			next.append(rules['F']);
+		}
+		else if(current[i]=='+')
+		{
+			next.append("+");
+		}
+		else if(current[i]=='-')
+		{
+			next.append("-");
+		}
+		else if(current[i]=='|')
+		{	
+			next.append("|");
 	
+		}
+	}
+	cout<<next<<endl;
+
+	drawGosper4(x,y,len,next,depth-1);
+		
 }
 
 void myDisplay(void)
@@ -323,12 +430,19 @@ void myDisplay(void)
 	// int angle=0;
 	// while(angle<360)
 	// {
-	// 	drawKoch(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),3);
-	// 	drawKoch(200*cos(0.01745329*angle),200*sin(0.01745329*angle),0,0,3);
-	// 	angle+=90;
+	// 	drawKoch(0,0,400*cos(0.01745329*angle),400*sin(0.01745329*angle),4);
+
+	// 	drawKoch(400*cos(0.01745329*angle),400*sin(0.01745329*angle),0,0,4);
+	// 	angle+=60;
 	// }
-	// // drawTriangle(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472));
-	// // drawSierp(0,0,200*cos(0.01745329*0),200*sin(0.01745329*0),200*cos(0.01745329*0+1.0472),200*cos(0.01745329*0+1.0472),4);
+	// while(angle<360)
+	// {
+	// 	drawKochCircular(0,0,400*cos(0.01745329*angle),400*sin(0.01745329*angle),4);
+	// 	drawKochCircular(400*cos(0.01745329*angle),400*sin(0.01745329*angle),0,0,4);
+	// 	angle+=60;
+	// }
+	drawTriangle(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472));
+	drawSierp(0,0,400*cos(0.01745329*0),400*sin(0.01745329*0),400*cos(0.01745329*0+1.0472),400*cos(0.01745329*0+1.0472),4);
 	// while(angle<360)
 	// {
 	// 	drawSierp(0,0,200*cos(0.01745329*angle),200*sin(0.01745329*angle),200*cos(0.01745329*angle+1.0472),200*sin(0.01745329*angle+1.0472),5);
@@ -336,8 +450,9 @@ void myDisplay(void)
 	// }
 	// drawGosper1(0,0,20,"F+F+F+F",3);
 	// drawGosper2(-400,-400,20,"F+F+F+F",4);
-	drawGosper3(0,0,4,"F",4);
-	drawGosper3(0,0,-4,"F",4);
+	// drawGosper3(0,0,4,"F",4);
+	// drawGosper3(0,0,-4,"F",4);
+	// drawGosper4(-300,-400,30,"F++F++F++F++F",3);
 	glutSwapBuffers ();
 }
 int main(int argc, char** argv)
